@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     buf = (unsigned char *)malloc(fsize);
     fread(buf, 1, fsize, infile);
     fclose(infile);
-    ganja_digest(buf, fsize, D, salt, 12);
+    hx_digest(buf, fsize, D, salt, 12);
     for (int x = 0; x < 32; x++) {
         sprintf(&digest[x*2], "%02x", D[x]);
     }

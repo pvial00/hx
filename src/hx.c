@@ -23,7 +23,7 @@ uint32_t F2(uint32_t a, uint32_t b, uint32_t c, uint32_t d) {
     return (a + b + c + d) & 0xFFFFFFFF;
 }
 
-unsigned char * ganja_core(unsigned char * data, long long datalen, unsigned char * D, unsigned char * salt, int saltlen) {
+unsigned char * hx_core(unsigned char * data, long long datalen, unsigned char * D, unsigned char * salt, int saltlen) {
     int rounds = 4;
     uint32_t H[8] = {0};
     uint32_t temp32[8] = {0};
@@ -123,7 +123,7 @@ unsigned char * ganja_core(unsigned char * data, long long datalen, unsigned cha
     }
 }
 
-unsigned char * ganja_digest(unsigned char * data, long datalen, unsigned char * D, unsigned char * salt, int saltlen) {
+unsigned char * hx_digest(unsigned char * data, long datalen, unsigned char * D, unsigned char * salt, int saltlen) {
     long blocklen = 256;
     if (datalen < blocklen) {
         unsigned char * block[blocklen];
@@ -132,9 +132,9 @@ unsigned char * ganja_digest(unsigned char * data, long datalen, unsigned char *
         for (i = 0; i < datalen; i++) {
             block[i] = (uintptr_t)block[i] ^ data[i];
         }
-        ganja_core(block, blocklen, D, salt, saltlen);
+        hx_core(block, blocklen, D, salt, saltlen);
     }
     else {
-        ganja_core(data, datalen, D, salt, saltlen);
+        hx_core(data, datalen, D, salt, saltlen);
     }
 }
