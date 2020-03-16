@@ -15,14 +15,6 @@ uint32_t rotl(uint32_t v, int c) {
     return ((v << c) | (v >> (32 - c)));
 }
 
-uint32_t F1(uint32_t a, uint32_t b, uint32_t c, uint32_t d) {
-    return (a ^ b ^ c ^ d);
-}
-
-uint32_t F2(uint32_t a, uint32_t b, uint32_t c, uint32_t d) {
-    return (a + b + c + d) & 0xFFFFFFFF;
-}
-
 unsigned char * hx_core(unsigned char * data, long long datalen, unsigned char * D, unsigned char * salt, int saltlen) {
     int rounds = 4;
     uint32_t H[8] = {0};
