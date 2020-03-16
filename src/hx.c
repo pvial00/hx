@@ -138,37 +138,3 @@ unsigned char * ganja_digest(unsigned char * data, long datalen, unsigned char *
         ganja_core(data, datalen, D, salt, saltlen);
     }
 }
-
-
-unsigned char * ganja_kdf(unsigned char * password, int passlen, unsigned char * D, int iterations, int keylen, unsigned char *salt) {
-    int b, i, f, s, r;
-    int c = 0;
-    ganja_digest(password, passlen, D, salt, 12);
-    for (i = 0; i < iterations; i++) {
-        ganja_digest(D, keylen, D, salt, 12);
-    }
-	    
-}
-
-unsigned char * ganja_crypt(unsigned char * msg, unsigned char * key, unsigned char * nonce, long msglen) {
-    long blocks = msglen / 32;
-    int extra = msglen % 32;
-    int blocklen = 32;
-    if (extra != 0) {
-        blocks += 1;
-    }
-    int i = 0;
-    int c = 0;
-    unsigned char state[32];
-    ganja_digest(key, 32, &state, nonce, 16);
-    for (int b = 0; b < blocks; b++) {
-        ganja_digest(&state, 32, &state, key, 32);
-        if (b == (blocks -1)) {
-            blocklen = extra;
-        }
-        for (i = 0; i < blocklen; i++) {
-            msg[c] = msg[c] ^ state[i];
-            c += 1;
-        }
-    }
-}
